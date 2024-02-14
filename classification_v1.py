@@ -12,7 +12,7 @@ train_dataloader= Chest_DataLoader(X_train, y_train, BATCH_SIZE, num_classes, na
 val_dataloder= Chest_DataLoader(X_val, y_val, BATCH_SIZE, num_classes, names)
 test_dataloder= Chest_DataLoader(X_test, y_test, BATCH_SIZE, num_classes, names)
 
-classification_model = classification_model_v1((224, 224, 3), num_classes)
+classification_model = classification_model_v1((256, 256, 3), num_classes)
 
 early_stopping = tf.keras.callbacks.EarlyStopping(
         monitor='val_loss',
@@ -25,14 +25,16 @@ lr_scheduler = tf.keras.callbacks.ReduceLROnPlateau(
     monitor="val_loss",
     mode='min',
     factor      =   .1,
-    patience    =   5,
+    patience    =   3,
     min_lr      =   0.000001,
     min_delta   =   0.001
 )
 
 classification_model.compile(optimizer=tf.keras.optimizers.Adam(),
-                            loss=tf.keras.losses.BinaryFocalCrossentropy(),  
-                            metrics=[tf.keras.metrics.AUC(multi_label=True)])
+                            loss=tf.keras.losses.BinaryFocalCrossentropy(apply_class_balancing=True),  
+                            metrics=[tf.keras.metrics.AUC(multi_label=True),
+                                     tf.keras.metrics.Recall(thresholds=0.5),
+                                     tf.keras.metrics.Precision(thresholds=0.5)])
 
 history = classification_model.fit(train_dataloader, 
         validation_data = val_dataloder,
