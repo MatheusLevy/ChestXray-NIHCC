@@ -1,11 +1,10 @@
-import numpy as np
-from PIL import Image 
 import pandas as pd
 from configs import *
 import os
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 import cv2
+import pickle
 
 def pre_process_csv(csv_path):
     df = pd.read_csv(csv_path, usecols=FIELDS)
@@ -53,13 +52,16 @@ def read_dataset():
         pacients, labels= make_pacient_dict(patient_df)
         X.append(pacients)
         y.append(labels)
+    
+    X= [sublista for sublista in X if sublista]
+    y= [sublista for sublista in y if sublista]
     assert len(X) == len(y)
     return X, y
 
 def split_data(X, y, test_size=0.2, validation_size=0.25, random_state=None):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state, shuffle=True)
     validation_size = validation_size / (1 - test_size)
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=validation_size, random_state=random_state)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=validation_size, random_state=random_state, shuffle=True)
     return X_train, X_val, X_test, y_train, y_val, y_test
 
 def flatten_dataset(X, y):
@@ -69,4 +71,9 @@ def flatten_dataset(X, y):
             path = dict_pacient['Image Index']
             X_flatten.append(path)
             y_flatten.append(label_pacient)
+    assert len(X_flatten) == len(y_flatten)
     return X_flatten, y_flatten
+
+def save_history(history, model_path, branch="geral"):
+    with open(f"{model_path}/history_{branch}", "wb") as f:
+            pickle.dump(history, f)

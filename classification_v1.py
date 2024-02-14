@@ -30,11 +30,9 @@ lr_scheduler = tf.keras.callbacks.ReduceLROnPlateau(
     min_delta   =   0.001
 )
 
-classification_model.compile(optimizer=tf.keras.optimizers.Adam(),
+classification_model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
                             loss=tf.keras.losses.BinaryFocalCrossentropy(apply_class_balancing=True),  
-                            metrics=[tf.keras.metrics.AUC(multi_label=True),
-                                     tf.keras.metrics.Recall(thresholds=0.5),
-                                     tf.keras.metrics.Precision(thresholds=0.5)])
+                            metrics=[tf.keras.metrics.AUC(multi_label=True, curve='ROC', )])
 
 history = classification_model.fit(train_dataloader, 
         validation_data = val_dataloder,
@@ -44,3 +42,5 @@ history = classification_model.fit(train_dataloader,
             early_stopping
             ])
 
+classification_model.save(filepath=f"/home/matheus_levy/workspace/lucas/model.hdf5")
+save_history(history.history, f"/home/matheus_levy/workspace/lucas/", branch="global")

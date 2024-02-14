@@ -9,11 +9,11 @@ def classification_model_v1(input_shape, n_classes):
     x = keras.layers.Flatten()(backbone_output)
     layer = keras.layers.BatchNormalization()(x)
     layer = keras.layers.Dense(units=256, activation='relu')(layer)
-    layer = keras.layers.Dropout(0.3)(layer)
+    layer = keras.layers.Dropout(0.4)(layer)
 
     layer = keras.layers.BatchNormalization()(x)
     layer = keras.layers.Dense(units=128, activation='relu')(layer)
-    layer = keras.layers.Dropout(0.3)(layer)
+    layer = keras.layers.Dropout(0.4)(layer)
 
     output = keras.layers.Dense(units=n_classes, activation='sigmoid')(layer)
     model = keras.models.Model(inputs=backbone.input, outputs=output)

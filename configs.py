@@ -1,6 +1,6 @@
 # Paths
-CSV_PATH= 'dataset/data.csv'
-IMG_PATHS = 'dataset/images'
+CSV_PATH= 'lucas/dataset/data.csv'
+IMG_PATHS = 'lucas/dataset/images'
 
 # Pre Process CSV
 FIELDS= ['Image Index', 'Finding Labels', 'Patient ID']

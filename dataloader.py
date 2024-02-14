@@ -4,10 +4,13 @@ from utils import pre_process_img, np
 from sklearn.preprocessing import MultiLabelBinarizer
 import cv2
 from utils import flatten_dataset
+from sklearn.utils import shuffle
 
 class Chest_DataLoader(tf.keras.utils.Sequence):
     def __init__(self, X, y, batch_size, num_classes, labels_names):
         X_train_flatten, y_train_flatten = flatten_dataset(X, y)
+        X_train_flatten, y_train_flatten = shuffle(X_train_flatten, y_train_flatten, random_state=None)
+        # self.X = X
         self.paths = X_train_flatten
         self.labels = y_train_flatten
         self.batch_size = batch_size
@@ -24,6 +27,7 @@ class Chest_DataLoader(tf.keras.utils.Sequence):
         end = (index + 1) * self.batch_size
         batch_data = self.paths[start:end]
         batch_labels = self.labels[start:end]
+        # batch_debug = self.X[start:end]
         X, y = self.__load_data(batch_data, batch_labels)
         return X, y
 
