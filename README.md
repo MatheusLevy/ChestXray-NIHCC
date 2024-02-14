@@ -10,6 +10,8 @@ The dataset folder contains:
   <img src="dataset/images/00000001_000.png" width="350" title="x-ray chest image">
 </p>
 
+Classes of the Dataset and the number of images:
+
 |        Class       	| Number of Images 	|
 |:------------------:	|:----------------:	|
 |    Cardiomegaly    	|       2776       	|
