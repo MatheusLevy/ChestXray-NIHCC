@@ -9,8 +9,8 @@ from sklearn.utils import shuffle
 class Chest_DataLoader(tf.keras.utils.Sequence):
     def __init__(self, X, y, batch_size, num_classes, labels_names):
         X_train_flatten, y_train_flatten = flatten_dataset(X, y)
-        X_train_flatten, y_train_flatten = shuffle(X_train_flatten, y_train_flatten, random_state=None)
-        # self.X = X
+        self.X_debug = X
+        self.labels_name= labels_names
         self.paths = X_train_flatten
         self.labels = y_train_flatten
         self.batch_size = batch_size
@@ -30,6 +30,11 @@ class Chest_DataLoader(tf.keras.utils.Sequence):
         # batch_debug = self.X[start:end]
         X, y = self.__load_data(batch_data, batch_labels)
         return X, y
+    def get_labels(self):
+        labels_binarized = []
+        for label in self.labels:
+            labels_binarized.append(self.label_binarizer.transform([label])[0])
+        return np.asarray(labels_binarized)
 
     def on_epoch_end(self):
         tf.random.shuffle(self.indexes)
@@ -38,7 +43,7 @@ class Chest_DataLoader(tf.keras.utils.Sequence):
         img = img.astype(np.float32)
         img_normalized = img/255.0
         return img_normalized
-
+    
     def __load_data(self, batch_data, batch_labels):
         X, y= [], []
         
