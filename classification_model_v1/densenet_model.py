@@ -51,7 +51,7 @@ def classification_model_v2(input_shape, n_classes):
     layer = keras.layers.Dense(units=256, activation='relu', kernel_regularizer=keras.regularizers.L1(0.01), activity_regularizer=keras.regularizers.L2(0.01))(layer)
     layer = keras.layers.Dropout(0.2)(layer)
 
-    layer = keras.layers.BatchNormalization()(x)
+    layer = keras.layers.BatchNormalization()(layer)
     layer = keras.layers.Dense(units=128, activation='relu', kernel_regularizer=keras.regularizers.L1(0.01), activity_regularizer=keras.regularizers.L2(0.01))(layer)
     layer = keras.layers.Dropout(0.2)(layer)
 
