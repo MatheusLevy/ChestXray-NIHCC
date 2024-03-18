@@ -32,19 +32,24 @@ Classes of the Dataset and the number of images:
 |    Consolidation   	|       4667       	|
 |     No Finding     	|       60361      	|
 
+## Model 
+### Fusion Model
+This model receives an image as input, it passes to two branches. The features of the two branches are passed to pointwise convolution to reduces it dimensions and are concatenated. The concatenated features are passed to an Attention.
+
 ## Results
 
 Model Fusion Metrics:
+The model was trained and evaluated in all classes except No Finding.
 
 <p align="center">
-  <img src="readme_files/train_val_loss.png" width="350" title="Loss">
+  <img src="readme_files/train_val_loss.png" width="800" title="Loss">
 </p>
 
 
 <p align="center">
-  <img src="readme_files/train_val_auc.png" width="350" title="AUC">
+  <img src="readme_files/train_val_auc.png" width="800" title="AUC">
 </p>
 
 <p align="center">
-  <img src="readme_files/roc.png" width="350" title="ROC">
+  <img src="readme_files/roc.png" width="800" title="ROC">
 </p>
