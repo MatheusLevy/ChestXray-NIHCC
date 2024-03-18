@@ -31,3 +31,20 @@ Classes of the Dataset and the number of images:
 |        Edema       	|       2303       	|
 |    Consolidation   	|       4667       	|
 |     No Finding     	|       60361      	|
+
+## Results
+
+Model Fusion Metrics:
+
+<p align="center">
+  <img src="readme_files/train_val_loss.png" width="350" title="Loss">
+</p>
+
+
+<p align="center">
+  <img src="readme_files/train_val_auc.png" width="350" title="AUC">
+</p>
+
+<p align="center">
+  <img src="readme_files/roc.png" width="350" title="ROC">
+</p>
